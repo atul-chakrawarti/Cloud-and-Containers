@@ -1,0 +1,72 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: multienv-mongo
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
+    networks: [multienv-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  backend-dev:
+    build: ./backend/dev
+    container_name: multienv-backend-dev
+    env_file: ./backend/dev/.env
+    ports:
+      - "3001:3001"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks: [multienv-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; socket.create_connection(('localhost',3001),2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  backend-prod:
+    build: ./backend/prod
+    container_name: multienv-backend-prod
+    env_file: ./backend/prod/.env
+    ports:
+      - "3002:3002"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks: [multienv-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; socket.create_connection(('localhost',3002),2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build: ./frontend
+    container_name: multienv-frontend
+    env_file: ./frontend/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      backend-dev:
+        condition: service_healthy
+      backend-prod:
+        condition: service_healthy
+    networks: [multienv-net]
+    restart: unless-stopped
+
+networks:
+  multienv-net:
+    driver: bridge
+
+volumes:
+  mongo-data:
