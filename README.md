@@ -111,3 +111,14 @@ The files are loaded into containers with `env_file` in `docker-compose.yml` (th
 ## Evidence
 
 Screenshots go in `screenshots/`: `docker ps`, `/`, `/dev`, `/prod`, ports 3001/3002, `docker compose logs`, curl tests, and `docker version`.
+
+## Screenshots
+
+![Screenshot 1](screenshots/1.png)
+![Screenshot 2](screenshots/2.png)
+![Screenshot 3](screenshots/3.png)
+![Screenshot 4](screenshots/4.png)
+![Screenshot 5](screenshots/5.png)
+![Screenshot 6](screenshots/6.png)
+![Screenshot 7](screenshots/7.png)
+![Screenshot 8](screenshots/8.png)
