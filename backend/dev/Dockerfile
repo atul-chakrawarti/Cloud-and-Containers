@@ -14,7 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Run as an unprivileged user
+RUN useradd --create-home appuser && chown -R appuser /app
+USER appuser
+
 EXPOSE 3001
 
-# Shell form so ${PORT} from the .env file is honoured. --debug enables reload.
-CMD flask run --host=0.0.0.0 --port=${PORT} --debug
+# Shell form so ${PORT} from the .env file is expanded; exec keeps flask as PID 1.
+CMD exec flask run --host=0.0.0.0 --port=${PORT} --debug
