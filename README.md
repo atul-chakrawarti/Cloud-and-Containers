@@ -121,3 +121,5 @@ The files are loaded into containers with `env_file` in `docker-compose.yml` (th
 ![Screenshot 6](screenshots/6.png)
 ![Screenshot 7](screenshots/7.png)
 ![Screenshot 8](screenshots/8.png)
+![Screenshot 9](screenshots/9.png)
+![Screenshot 10](screenshots/10.png)
