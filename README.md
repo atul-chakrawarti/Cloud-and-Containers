@@ -39,7 +39,7 @@ Tickets added on the backends (3001 / 3002) appear on the frontend (`/dev` / `/p
 ## Quick Start
 
 ```bash
-cd multiEnv
+cd Cloud-and-Containers
 docker compose up --build -d
 docker compose ps
 ```
@@ -110,7 +110,6 @@ The files are loaded into containers with `env_file` in `docker-compose.yml` (th
 
 ## Evidence
 
-Screenshots go in `screenshots/`: `docker ps`, `/`, `/dev`, `/prod`, ports 3001/3002, `docker compose logs`, curl tests, and `docker version`.
 
 ## Screenshots
 
